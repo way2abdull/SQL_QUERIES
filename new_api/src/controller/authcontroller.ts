@@ -2,11 +2,15 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
 
+
 export const signup = async (req: Request, res: Response) => {
   const { username, password } = req.body;
-
+  
   try {
-    const user = await User.create({ username, password });
+    const user = await User.create({ 
+      username:req.body.username,
+      password:req.body.password
+    });
     const userId = user.id;
 
     const token = jwt.sign({ userId }, 'secret');
